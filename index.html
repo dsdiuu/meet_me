@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Comforter&family=Indie+Flower&family=The+Nautigal&family=Vujahday+Script&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function login(){
+            $(".form").hide(1000);
+            $("#root").load("login.html",function(){
+                $("#login_form").show(500);
+            })
+        }
+        function register(){
+            $(".form").hide(1000);
+            $("#root").load("register.html",function(){
+                $("#register_form").show(500);
+            })
+        }
+        function register_php(){
+                var login=$("#login").val();
+                var password=$("#password").val();
+                var passwords=$("#passwords").val();
+                if(login!=""){
+                    if(password==passwords){
+                    if(password!=""){
+                    $.post("register.php",{login, password, passwords},function(response){
+                        alert(response);
+                        $("#register_form").hide(500);
+                        
+                    });
+                    }
+                    else{
+                        alert("You must type password to register account.");
+                    }
+              
+                    }
+                    else{
+                        alert("Passwords must be the same!");
+                    }
+                }else{
+                    alert('You must type login.');
+                }
+      
+        }
+        function login_php(){
+            var login=$("#login_q").val();
+            var test="k";
+            var password=$("#password_q").val();
+            if(login!=""){
+                if(password!=""){
+                    $.post("login.php",{login,password,test},function(response){
+                        var te=response;
+                        if(te=="true"){
+                            $(".form").hide(500,function(){
+                                $("#root").load("logged.html");
+                            })
+                            
+                        }else{
+                            alert(response);
+                        }
+                    });
+                }else{
+                    alert('You must type password.');
+                }
+            }else{
+                alert("You must type login.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="nav">
+        <div id="logo">meet_me.com</div>
+        <!--login bt-->
+        <div id="btn_ctn">
+            <div id="sign_up" onclick="register()" class="login_btn">sign up</div>
+            <div id="login_btn" onclick="login()"  class="login_btn">sign in</div>           
+        </div>
+    </div>
+    <div id="root">
+
+    </div>
+</body>
+</html>
